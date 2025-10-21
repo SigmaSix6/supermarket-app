@@ -16,7 +16,7 @@ export const products: Product[] = [
     price: 3.49,
     category: 'Dairy',
     image: '🥛',
-    description: 'Fresh whole milk, 1 gallon',
+    description: 'Fresh whole milk, 2L',
     inStock: true
   },
   {
@@ -43,7 +43,7 @@ export const products: Product[] = [
     price: 3.99,
     category: 'Fruits',
     image: '🍎',
-    description: 'Crisp red apples, 3lb bag',
+    description: 'Crisp red apples, 1kg bag',
     inStock: true
   },
   {
@@ -52,16 +52,16 @@ export const products: Product[] = [
     price: 8.99,
     category: 'Meat',
     image: '🍗',
-    description: 'Boneless skinless chicken breast, 2lb',
+    description: 'Boneless skinless chicken breast, 1kg',
     inStock: true
   },
   {
     id: '7',
-    name: 'Rice (5lb)',
+    name: 'Rice (2.27kg)',
     price: 6.49,
     category: 'Grains',
     image: '🍚',
-    description: 'Long grain white rice, 5lb bag',
+    description: 'Long grain white rice, 2kg bag',
     inStock: true
   },
   {
@@ -70,7 +70,7 @@ export const products: Product[] = [
     price: 4.49,
     category: 'Vegetables',
     image: '🍅',
-    description: 'Fresh vine-ripened tomatoes, 2lb',
+    description: 'Fresh vine-ripened tomatoes, 1kg',
     inStock: true
   },
   {
@@ -79,7 +79,7 @@ export const products: Product[] = [
     price: 5.99,
     category: 'Dairy',
     image: '🧀',
-    description: 'Sharp cheddar cheese, 8oz',
+    description: 'Sharp cheddar cheese, 250g',
     inStock: true
   },
   {
@@ -88,7 +88,7 @@ export const products: Product[] = [
     price: 3.29,
     category: 'Vegetables',
     image: '🥔',
-    description: 'Russet potatoes, 5lb bag',
+    description: 'Russet potatoes, 2kg bag',
     inStock: true
   },
   {
@@ -97,7 +97,7 @@ export const products: Product[] = [
     price: 7.99,
     category: 'Meat',
     image: '🥩',
-    description: 'Lean ground beef, 1lb',
+    description: 'Lean ground beef, 500g',
     inStock: true
   },
   {
@@ -106,7 +106,7 @@ export const products: Product[] = [
     price: 4.79,
     category: 'Beverages',
     image: '🍊',
-    description: 'Fresh squeezed orange juice, 64oz',
+    description: 'Fresh squeezed orange juice, 2L',
     inStock: true
   }
 ];

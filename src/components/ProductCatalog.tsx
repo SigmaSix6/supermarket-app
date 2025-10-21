@@ -68,14 +68,14 @@ export default function ProductCatalog() {
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className=" rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden border border-gray-200"
+            className="rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden border border-gray-200 flex flex-col"
           >
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-grow">
               <div className="text-4xl mb-4 text-center">{product.image}</div>
               <h3 className="text-lg font-semibold text-foreground mb-2">{product.name}</h3>
-              <p className="text-sm mb-3">{product.description}</p>
+              <p className="text-sm mb-3 flex-grow">{product.description}</p>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-2xl font-bold text-green-600">${product.price.toFixed(2)}</span>
+                <span className="text-2xl font-bold text-green-600">RP&nbsp;{product.price.toFixed(2)}</span>
                 <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
                   {product.category}
                 </span>

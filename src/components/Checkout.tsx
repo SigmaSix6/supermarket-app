@@ -286,14 +286,14 @@ export default function Checkout() {
                       {item.product.name} × {item.quantity}
                     </span>
                     <span className="text-sm font-medium text-foreground">
-                      ${(item.product.price * item.quantity).toFixed(2)}
+                      RP {(item.product.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}
                 <div className="border-t border-gray-200 pt-2">
                   <div className="flex justify-between items-center text-lg font-semibold text-foreground">
                     <span>Total:</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <span>RP {totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
