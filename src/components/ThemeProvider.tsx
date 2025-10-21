@@ -8,22 +8,12 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
   useEffect(() => {
     const root = window.document.documentElement;
+    // Remove all theme classes
     root.classList.remove('light', 'dark');
+    // Add the current theme class
     root.classList.add(theme);
-    root.setAttribute('data-theme', theme);
-    console.log('Theme changed to:', theme); // Debug log
-    console.log('HTML classes:', root.className); // Debug log
+    console.log('Theme applied:', theme, 'HTML classes:', root.className);
   }, [theme]);
-
-  // Initialize theme on mount
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (!root.classList.contains('light') && !root.classList.contains('dark')) {
-      root.classList.add(theme);
-      root.setAttribute('data-theme', theme);
-      console.log('Initial theme set to:', theme);
-    }
-  }, []);
 
   return <>{children}</>;
 }

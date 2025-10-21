@@ -19,20 +19,30 @@ export const useThemeStore = create<ThemeState>()(
         console.log('Toggling theme from', currentTheme, 'to', newTheme);
         set({ theme: newTheme });
       },
-      setTheme: (theme: Theme) => set({ theme }),
+      setTheme: (theme: Theme) => {
+        console.log('Setting theme to:', theme);
+        set({ theme });
+      },
     }),
     {
       name: 'supermarket-theme',
       storage: {
         getItem: (name) => {
+          if (typeof window === 'undefined') return null;
           const str = localStorage.getItem(name);
           if (!str) return null;
-          return JSON.parse(str);
+          try {
+            return JSON.parse(str);
+          } catch {
+            return null;
+          }
         },
         setItem: (name, value) => {
+          if (typeof window === 'undefined') return;
           localStorage.setItem(name, JSON.stringify(value));
         },
         removeItem: (name) => {
+          if (typeof window === 'undefined') return;
           localStorage.removeItem(name);
         },
       },

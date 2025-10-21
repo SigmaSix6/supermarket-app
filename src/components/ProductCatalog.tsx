@@ -25,8 +25,8 @@ export default function ProductCatalog() {
     <div className="w-full max-w-6xl mx-auto p-6">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Supermarket</h1>
-        <p className="text-gray-600 dark:text-gray-300">Fresh groceries delivered to your door</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Supermarket</h1>
+        <p className="">Fresh groceries delivered to your door</p>
       </div>
 
       {/* Search and Filter */}
@@ -38,10 +38,10 @@ export default function ProductCatalog() {
             placeholder="Search products..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 pl-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent  text-foreground placeholder-gray-500"
           />
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <span className="text-gray-400">🔍</span>
+            <span className="">🔍</span>
           </div>
         </div>
 
@@ -54,7 +54,7 @@ export default function ProductCatalog() {
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 selectedCategory === category
                   ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               {category}
@@ -68,15 +68,15 @@ export default function ProductCatalog() {
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden border border-gray-200 dark:border-gray-700"
+            className=" rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden border border-gray-200"
           >
             <div className="p-6">
               <div className="text-4xl mb-4 text-center">{product.image}</div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{product.name}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{product.description}</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{product.name}</h3>
+              <p className="text-sm mb-3">{product.description}</p>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-2xl font-bold text-green-600 dark:text-green-400">${product.price.toFixed(2)}</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                <span className="text-2xl font-bold text-green-600">${product.price.toFixed(2)}</span>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
                   {product.category}
                 </span>
               </div>
@@ -99,8 +99,8 @@ export default function ProductCatalog() {
       {filteredProducts.length === 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🔍</div>
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No products found</h3>
-          <p className="text-gray-600 dark:text-gray-300">Try adjusting your search or filter criteria</p>
+          <h3 className="text-xl font-semibold text-foreground mb-2">No products found</h3>
+          <p className="text-gray-600">Try adjusting your search or filter criteria</p>
         </div>
       )}
     </div>

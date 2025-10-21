@@ -58,21 +58,21 @@ export default function ShoppingCart() {
       onClick={toggleCart}
     >
       <div 
-        className="bg-white dark:bg-gray-800 w-full max-w-md h-full shadow-xl flex flex-col"
+        className=" w-full max-w-md h-full shadow-xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-foreground">
               Shopping Cart ({totalItems} items)
             </h2>
-            <button
+            {/* <button
               onClick={toggleCart}
-              className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 text-2xl"
+              className="text-gray-400 hover:text-gray-600 text-2xl"
             >
               ×
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -81,8 +81,8 @@ export default function ShoppingCart() {
           {items.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🛒</div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Your cart is empty</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">Add some items to get started!</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">Your cart is empty</h3>
+              <p className="text-gray-600 mb-6">Add some items to get started!</p>
               <button
                 onClick={toggleCart}
                 className="bg-blue-500 text-white py-2 px-6 rounded-lg font-medium hover:bg-blue-600 transition-colors"
@@ -93,38 +93,38 @@ export default function ShoppingCart() {
           ) : (
             <div className="space-y-4">
               {items.map((item) => (
-                <div key={item.product.id} className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div key={item.product.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                   <div className="text-3xl">{item.product.image}</div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    <h3 className="text-sm font-medium text-foreground truncate">
                       {item.product.name}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">${item.product.price.toFixed(2)} each</p>
+                    <p className="text-sm text-gray-500">${item.product.price.toFixed(2)} each</p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                      className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors text-gray-700 dark:text-gray-300"
+                      className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors text-gray-700"
                     >
                       -
                     </button>
-                    <span className="w-8 text-center text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="w-8 text-center text-sm font-medium text-foreground">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                      className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors text-gray-700 dark:text-gray-300"
+                      className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors text-gray-700"
                     >
                       +
                     </button>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    <p className="text-sm font-medium text-foreground">
                       ${(item.product.price * item.quantity).toFixed(2)}
                     </p>
                     <button
                       onClick={() => removeItem(item.product.id)}
-                      className="text-xs text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                      className="text-xs text-red-500 hover:text-red-700"
                     >
                       Remove
                     </button>
@@ -137,8 +137,8 @@ export default function ShoppingCart() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="p-6 border-t border-gray-200 dark:border-gray-700 space-y-4">
-            <div className="flex justify-between items-center text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="p-6 border-t border-gray-200 space-y-4">
+            <div className="flex justify-between items-center text-lg font-semibold text-foreground">
               <span>Total:</span>
               <span>${totalPrice.toFixed(2)}</span>
             </div>
@@ -151,7 +151,7 @@ export default function ShoppingCart() {
               </button>
               <button
                 onClick={clearCart}
-                className="w-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
+                className="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors"
               >
                 Clear Cart
               </button>
