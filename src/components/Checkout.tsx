@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useCartStore } from '../store/cartStore';
+import { useHistoryStore } from '../store/historyStore';
 
 interface CheckoutForm {
   firstName: string;
@@ -17,8 +18,11 @@ interface CheckoutForm {
   cvv: string;
 }
 
-export default function Checkout() {
-  const [isOpen, setIsOpen] = useState(false);
+interface CheckoutProps {
+  onClose: () => void;
+}
+
+export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState<CheckoutForm>({
     firstName: '',
@@ -35,6 +39,7 @@ export default function Checkout() {
   });
 
   const { items, getTotalPrice, clearCart } = useCartStore();
+  const { addOrder } = useHistoryStore();
   const totalPrice = getTotalPrice();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -52,9 +57,25 @@ export default function Checkout() {
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 2000));
     
+    // Save order to history
+    addOrder({
+      items: [...items],
+      totalPrice,
+      customerInfo: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        zipCode: formData.zipCode,
+        paymentMethod: formData.paymentMethod,
+      },
+    });
+    
     // Clear cart and close checkout
     clearCart();
-    setIsOpen(false);
+    onClose();
     setIsProcessing(false);
     
     // Reset form
@@ -75,25 +96,20 @@ export default function Checkout() {
     alert('Order placed successfully! Thank you for your purchase.');
   };
 
-  if (!isOpen) {
-    return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-600 transition-colors"
-      >
-        Proceed to Checkout
-      </button>
-    );
-  }
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className=" w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg shadow-xl">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      onClick={() => onClose()}
+    >
+      <div 
+        className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg shadow-xl" style={{ backgroundColor: 'var(--background)' }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-foreground">Checkout</h2>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => onClose()}
               className="text-gray-400 hover:text-gray-600 text-2xl"
             >
               ×
@@ -106,7 +122,7 @@ export default function Checkout() {
               <h3 className="text-lg font-semibold text-foreground mb-4">Personal Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium  mb-1">
                     First Name
                   </label>
                   <input
@@ -119,7 +135,7 @@ export default function Checkout() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium  mb-1">
                     Last Name
                   </label>
                   <input
@@ -132,7 +148,7 @@ export default function Checkout() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium  mb-1">
                     Email
                   </label>
                   <input
@@ -145,7 +161,7 @@ export default function Checkout() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium  mb-1">
                     Phone
                   </label>
                   <input
@@ -165,7 +181,7 @@ export default function Checkout() {
               <h3 className="text-lg font-semibold text-foreground mb-4">Shipping Address</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium  mb-1">
                     Address
                   </label>
                   <input
@@ -179,7 +195,7 @@ export default function Checkout() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium  mb-1">
                       City
                     </label>
                     <input
@@ -192,7 +208,7 @@ export default function Checkout() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium  mb-1">
                       ZIP Code
                     </label>
                     <input
@@ -213,7 +229,7 @@ export default function Checkout() {
               <h3 className="text-lg font-semibold text-foreground mb-4">Payment Method</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium  mb-2">
                     Select Payment Method
                   </label>
                   <select
@@ -231,7 +247,7 @@ export default function Checkout() {
                 {formData.paymentMethod === 'card' && (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium  mb-1">
                         Card Number
                       </label>
                       <input
@@ -245,7 +261,7 @@ export default function Checkout() {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium  mb-1">
                           Expiry Date
                         </label>
                         <input
@@ -258,7 +274,7 @@ export default function Checkout() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium  mb-1">
                           CVV
                         </label>
                         <input
@@ -282,7 +298,7 @@ export default function Checkout() {
               <div className="space-y-2">
                 {items.map((item) => (
                   <div key={item.product.id} className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm">
                       {item.product.name} × {item.quantity}
                     </span>
                     <span className="text-sm font-medium text-foreground">
@@ -303,8 +319,8 @@ export default function Checkout() {
             <div className="flex space-x-4">
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
-                className="flex-1 bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                onClick={() => onClose()}
+                className="flex-1 py-3 px-4 rounded-lg font-medium border hover:bg-gray-300 transition-colors"
               >
                 Cancel
               </button>

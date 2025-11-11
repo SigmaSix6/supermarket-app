@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { products, categories } from '../data/products';
-import { useCartStore } from '../store/cartStore';
-import { Product } from '../store/cartStore';
+import { useCartStore, Product } from '../store/cartStore';
 
 export default function ProductCatalog() {
   const [selectedCategory, setSelectedCategory] = useState('All');

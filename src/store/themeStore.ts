@@ -16,11 +16,9 @@ export const useThemeStore = create<ThemeState>()(
       toggleTheme: () => {
         const currentTheme = get().theme;
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        console.log('Toggling theme from', currentTheme, 'to', newTheme);
         set({ theme: newTheme });
       },
       setTheme: (theme: Theme) => {
-        console.log('Setting theme to:', theme);
         set({ theme });
       },
     }),
@@ -28,7 +26,7 @@ export const useThemeStore = create<ThemeState>()(
       name: 'supermarket-theme',
       storage: {
         getItem: (name) => {
-          if (typeof window === 'undefined') return null;
+          if (typeof globalThis.window === 'undefined') return null;
           const str = localStorage.getItem(name);
           if (!str) return null;
           try {
@@ -38,11 +36,11 @@ export const useThemeStore = create<ThemeState>()(
           }
         },
         setItem: (name, value) => {
-          if (typeof window === 'undefined') return;
+          if (typeof globalThis.window === 'undefined') return;
           localStorage.setItem(name, JSON.stringify(value));
         },
         removeItem: (name) => {
-          if (typeof window === 'undefined') return;
+          if (typeof globalThis.window === 'undefined') return;
           localStorage.removeItem(name);
         },
       },

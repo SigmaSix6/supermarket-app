@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useCartStore } from '../store/cartStore';
+import { useHistoryStore } from '../store/historyStore';
 import Checkout from './Checkout';
+import History from './History';
 
 export default function ShoppingCart() {
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const {
     items,
     isOpen,
@@ -16,9 +19,11 @@ export default function ShoppingCart() {
     getTotalItems,
     getTotalPrice
   } = useCartStore();
+  const { getOrderCount } = useHistoryStore();
 
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
+  const orderCount = getOrderCount();
 
   // Handle escape key to close cart
   useEffect(() => {
@@ -36,19 +41,36 @@ export default function ShoppingCart() {
 
   if (!isOpen) {
     return (
-      <button
-        onClick={toggleCart}
-        className="fixed bottom-6 right-6 bg-blue-500 dark:bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors z-50"
-      >
-        <div className="relative">
-          <span className="text-2xl">🛒</span>
-          {totalItems > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
-              {totalItems}
-            </span>
-          )}
-        </div>
-      </button>
+      <>
+        <button
+          onClick={() => setShowHistory(true)}
+          className="fixed bottom-6 right-24 bg-green-500 dark:bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-600 dark:hover:bg-green-700 transition-colors z-50"
+          title="Order History"
+        >
+          <div className="relative">
+            <span className="text-2xl">📦</span>
+            {orderCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
+                {orderCount}
+              </span>
+            )}
+          </div>
+        </button>
+        <button
+          onClick={toggleCart}
+          className="fixed bottom-6 right-6 bg-blue-500 dark:bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors z-50"
+        >
+          <div className="relative">
+            <span className="text-2xl">🛒</span>
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
+          </div>
+        </button>
+        {showHistory && <History onClose={() => setShowHistory(false)} />}
+      </>
     );
   }
 
@@ -68,12 +90,6 @@ export default function ShoppingCart() {
             <h2 className="text-xl font-semibold text-foreground">
               Shopping Cart ({totalItems} items)
             </h2>
-            {/* <button
-              onClick={toggleCart}
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 text-2xl"
-            >
-              ×
-            </button> */}
           </div>
         </div>
 
@@ -160,7 +176,8 @@ export default function ShoppingCart() {
           </div>
         )}
       </div>
-      {showCheckout && <Checkout />}
+      {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
+      {showHistory && <History onClose={() => setShowHistory(false)} />}
     </div>
   );
 }
