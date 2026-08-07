@@ -26,7 +26,7 @@ export const useThemeStore = create<ThemeState>()(
       name: 'supermarket-theme',
       storage: {
         getItem: (name) => {
-          if (typeof globalThis.window === 'undefined') return null;
+          if (globalThis.window === undefined) return null;
           const str = localStorage.getItem(name);
           if (!str) return null;
           try {
@@ -36,11 +36,11 @@ export const useThemeStore = create<ThemeState>()(
           }
         },
         setItem: (name, value) => {
-          if (typeof globalThis.window === 'undefined') return;
+          if (globalThis.window === undefined) return;
           localStorage.setItem(name, JSON.stringify(value));
         },
         removeItem: (name) => {
-          if (typeof globalThis.window === 'undefined') return;
+          if (globalThis.window === undefined) return;
           localStorage.removeItem(name);
         },
       },

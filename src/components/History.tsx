@@ -26,15 +26,29 @@ export default function History({ onClose }: Readonly<HistoryProps>) {
     setExpandedOrderId(expandedOrderId === orderId ? null : orderId);
   };
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  const handleBackdropKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      onClose();
+    }
+  };
+
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-      onClick={() => onClose()}
+    <button
+      type="button"
+      className="fixed inset-0 backdrop-blur-md bg-black/30 dark:bg-black/50 z-50 flex items-center justify-center p-4 border-0 cursor-default"
+      onClick={handleBackdropClick}
+      onKeyDown={handleBackdropKeyDown}
+      aria-label="Close order history"
     >
       <div 
         className="w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg shadow-xl" 
         style={{ backgroundColor: 'var(--background)' }}
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
@@ -76,9 +90,12 @@ export default function History({ onClose }: Readonly<HistoryProps>) {
                   key={order.id}
                   className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
                 >
-                  <div
-                    className="p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  <button
+                    type="button"
+                    className="w-full p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-left border-0 bg-transparent"
                     onClick={() => toggleOrder(order.id)}
+                    aria-expanded={expandedOrderId === order.id}
+                    aria-label={`Toggle order ${order.id.split('-')[1]} details`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
@@ -91,7 +108,7 @@ export default function History({ onClose }: Readonly<HistoryProps>) {
                           </span>
                         </div>
                         <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                          <span>{order.items.length} item{order.items.length !== 1 ? 's' : ''}</span>
+                          <span>{order.items.length} item{order.items.length === 1 ? '' : 's'}</span>
                           <span>•</span>
                           <span className="font-medium text-foreground">
                             RP {order.totalPrice.toFixed(2)}
@@ -100,11 +117,11 @@ export default function History({ onClose }: Readonly<HistoryProps>) {
                           <span className="capitalize">{order.customerInfo.paymentMethod}</span>
                         </div>
                       </div>
-                      <button className="text-gray-400 hover:text-gray-600 text-xl">
+                      <span className="text-gray-400 text-xl">
                         {expandedOrderId === order.id ? '▼' : '▶'}
-                      </button>
+                      </span>
                     </div>
-                  </div>
+                  </button>
 
                   {expandedOrderId === order.id && (
                     <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800">
@@ -181,7 +198,7 @@ export default function History({ onClose }: Readonly<HistoryProps>) {
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
 

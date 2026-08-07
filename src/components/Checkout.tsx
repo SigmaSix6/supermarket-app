@@ -98,19 +98,27 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-      onClick={() => onClose()}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="checkout-title"
     >
+      <button
+        type="button"
+        onClick={onClose}
+        className="fixed inset-0 backdrop-blur-md bg-black/30 dark:bg-black/50"
+        aria-label="Close dialog"
+      />
       <div 
-        className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg shadow-xl" style={{ backgroundColor: 'var(--background)' }}
-        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg shadow-xl relative z-10" style={{ backgroundColor: 'var(--background)' }}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-foreground">Checkout</h2>
+            <h2 id="checkout-title" className="text-2xl font-bold text-foreground">Checkout</h2>
             <button
-              onClick={() => onClose()}
+              onClick={onClose}
               className="text-gray-400 hover:text-gray-600 text-2xl"
+              aria-label="Close checkout"
             >
               ×
             </button>
@@ -122,10 +130,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
               <h3 className="text-lg font-semibold text-foreground mb-4">Personal Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium  mb-1">
+                  <label htmlFor="firstName" className="block text-sm font-medium  mb-1">
                     First Name
                   </label>
                   <input
+                    id="firstName"
                     type="text"
                     name="firstName"
                     value={formData.firstName}
@@ -135,10 +144,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium  mb-1">
+                  <label htmlFor="lastName" className="block text-sm font-medium  mb-1">
                     Last Name
                   </label>
                   <input
+                    id="lastName"
                     type="text"
                     name="lastName"
                     value={formData.lastName}
@@ -148,10 +158,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium  mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium  mb-1">
                     Email
                   </label>
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -161,10 +172,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium  mb-1">
+                  <label htmlFor="phone" className="block text-sm font-medium  mb-1">
                     Phone
                   </label>
                   <input
+                    id="phone"
                     type="tel"
                     name="phone"
                     value={formData.phone}
@@ -181,10 +193,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
               <h3 className="text-lg font-semibold text-foreground mb-4">Shipping Address</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium  mb-1">
+                  <label htmlFor="address" className="block text-sm font-medium  mb-1">
                     Address
                   </label>
                   <input
+                    id="address"
                     type="text"
                     name="address"
                     value={formData.address}
@@ -195,10 +208,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium  mb-1">
+                    <label htmlFor="city" className="block text-sm font-medium  mb-1">
                       City
                     </label>
                     <input
+                      id="city"
                       type="text"
                       name="city"
                       value={formData.city}
@@ -208,10 +222,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium  mb-1">
+                    <label htmlFor="zipCode" className="block text-sm font-medium  mb-1">
                       ZIP Code
                     </label>
                     <input
+                      id="zipCode"
                       type="text"
                       name="zipCode"
                       value={formData.zipCode}
@@ -229,10 +244,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
               <h3 className="text-lg font-semibold text-foreground mb-4">Payment Method</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium  mb-2">
+                  <label htmlFor="paymentMethod" className="block text-sm font-medium  mb-2">
                     Select Payment Method
                   </label>
                   <select
+                    id="paymentMethod"
                     name="paymentMethod"
                     value={formData.paymentMethod}
                     onChange={handleInputChange}
@@ -247,10 +263,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                 {formData.paymentMethod === 'card' && (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium  mb-1">
+                      <label htmlFor="cardNumber" className="block text-sm font-medium  mb-1">
                         Card Number
                       </label>
                       <input
+                        id="cardNumber"
                         type="text"
                         name="cardNumber"
                         value={formData.cardNumber}
@@ -261,10 +278,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium  mb-1">
+                        <label htmlFor="expiryDate" className="block text-sm font-medium  mb-1">
                           Expiry Date
                         </label>
                         <input
+                          id="expiryDate"
                           type="text"
                           name="expiryDate"
                           value={formData.expiryDate}
@@ -274,10 +292,11 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium  mb-1">
+                        <label htmlFor="cvv" className="block text-sm font-medium  mb-1">
                           CVV
                         </label>
                         <input
+                          id="cvv"
                           type="text"
                           name="cvv"
                           value={formData.cvv}
@@ -319,7 +338,7 @@ export default function Checkout({ onClose }: Readonly<CheckoutProps>) {
             <div className="flex space-x-4">
               <button
                 type="button"
-                onClick={() => onClose()}
+                onClick={onClose}
                 className="flex-1 py-3 px-4 rounded-lg font-medium border hover:bg-gray-300 transition-colors"
               >
                 Cancel

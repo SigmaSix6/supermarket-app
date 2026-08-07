@@ -34,7 +34,7 @@ export const useHistoryStore = create<HistoryState>()(
       addOrder: (order) => {
         const newOrder: OrderHistoryItem = {
           ...order,
-          id: `order-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          id: `order-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
           date: new Date().toISOString(),
         };
         
